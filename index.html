@@ -1,0 +1,2157 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>论坛工作人员双语跟读练习</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: start;
+                -ms-flex-align: start;
+                    align-items: flex-start;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            margin-bottom: 20px;
+            max-height: calc(100vh - 100px);
+        }
+        
+        header {
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+            color: white;
+            padding: 15px 15px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        
+        .game-container {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                    flex-grow: 1;
+        }
+        
+        .progress-container {
+            margin: 0 0 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+            width: 0%;
+            -webkit-transition: width 0.5s ease;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-info {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            margin: 5px 0 10px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.85rem;
+        }
+        
+        .dialogue-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            position: relative;
+        }
+        
+        .phrase-card {
+            width: 100%;
+            margin: 0 0 15px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .phrase-chinese {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1a2980;
+            line-height: 1.4;
+        }
+        
+        .phrase-pinyin {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        
+        .phrase-english {
+            font-size: 1rem;
+            color: #1a2980;
+            font-weight: 500;
+            padding: 8px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            margin-top: 8px;
+        }
+        
+        /* 整合控制区域 - 调整布局 */
+        .control-section {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            gap: 10px;
+        }
+        
+        .audio-controls {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            gap: 8px;
+            width: 100%;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+        }
+        
+        .audio-btn {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            padding: 8px;
+            border-radius: 12px;
+            min-width: 70px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .audio-btn:active {
+            -webkit-transform: scale(0.95);
+                    transform: scale(0.95);
+        }
+        
+        .audio-btn i {
+            font-size: 1.4rem;
+            color: #1a2980;
+            background: #e3f2fd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        .audio-btn:active i {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+        }
+        
+        .audio-btn span {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.8rem;
+        }
+        
+        /* 导航按钮移到播放按钮下方 */
+        .navigation-buttons {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 12px;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            width: 100%;
+            margin: 5px 0 10px;
+        }
+        
+        .nav-btn {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            background: white;
+            color: #1a2980;
+            border: 1px solid #1a2980;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn:active {
+            -webkit-transform: scale(0.95);
+                    transform: scale(0.95);
+        }
+        
+        .nav-btn:hover {
+            background: #f0f7ff;
+        }
+        
+        .recording-section {
+            margin: 10px 0 5px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .recording-indicator {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            height: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .record-dot {
+            width: 10px;
+            height: 10px;
+            background: #e74c3c;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .recording .record-dot {
+            -webkit-animation: pulse 1s infinite;
+                    animation: pulse 1s infinite;
+        }
+        
+        @-webkit-keyframes pulse {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        .recording-controls {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            width: 100%;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                    flex: 1;
+            min-width: 100px;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+        }
+        
+        .btn:active {
+            -webkit-transform: scale(0.95);
+                    transform: scale(0.95);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+            color: white;
+            box-shadow: 0 4px 10px rgba(26, 41, 128, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #1a2980;
+            border: 2px solid #1a2980;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .additional-controls {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .scene-info {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .scene-title {
+            font-size: 1rem;
+            color: #1a2980;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #26d0ce;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 6px;
+        }
+        
+        .scene-description {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 8px;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+        }
+        
+        .scene-description > div {
+            -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                    flex: 1;
+            min-width: 100%;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .scene-description h3 {
+            color: #1a2980;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 5px;
+        }
+        
+        .tips {
+            background: #fff8e1;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .tips h3 {
+            color: #1a2980;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+        }
+        
+        .tips ul {
+            padding-left: 20px;
+        }
+        
+        .tips li {
+            margin: 6px 0;
+            line-height: 1.4;
+        }
+        
+        .completion-message {
+            text-align: center;
+            padding: 30px 15px;
+            display: none;
+        }
+        
+        .completion-message h2 {
+            font-size: 1.6rem;
+            color: #1a2980;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 10px;
+        }
+        
+        .completion-message p {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .stars {
+            font-size: 1.8rem;
+            color: #ffc107;
+            margin: 15px 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            gap: 8px;
+        }
+        
+        .stars i {
+            -webkit-animation: spin 3s linear infinite;
+                    animation: spin 3s linear infinite;
+        }
+        
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0); transform: rotate(0); }
+            100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+            0% { -webkit-transform: rotate(0); transform: rotate(0); }
+            100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+        
+        /* 语音波形动画 */
+        .voice-wave {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            height: 30px;
+            margin: 8px 0;
+        }
+        
+        .wave-bar {
+            width: 2px;
+            height: 12px;
+            background: #26d0ce;
+            margin: 0 2px;
+            border-radius: 2px;
+            -webkit-animation: wave 1.2s ease-in-out infinite;
+                    animation: wave 1.2s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(1) { -webkit-animation-delay: 0s; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { -webkit-animation-delay: 0.1s; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { -webkit-animation-delay: 0.2s; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { -webkit-animation-delay: 0.3s; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { -webkit-animation-delay: 0.4s; animation-delay: 0.4s; }
+        
+        @-webkit-keyframes wave {
+            0%, 100% { -webkit-transform: scaleY(0.3); transform: scaleY(0.3); }
+            50% { -webkit-transform: scaleY(1); transform: scaleY(1); }
+        }
+        
+        @keyframes wave {
+            0%, 100% { -webkit-transform: scaleY(0.3); transform: scaleY(0.3); }
+            50% { -webkit-transform: scaleY(1); transform: scaleY(1); }
+        }
+        
+        /* 状态指示器 */
+        .status-indicator {
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 5px 0;
+        }
+        
+        .status-recording {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .status-playing {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .recording-dot {
+            background: #c62828;
+            -webkit-animation: blink 1s infinite;
+                    animation: blink 1s infinite;
+        }
+        
+        .playing-dot {
+            background: #2e7d32;
+        }
+        
+        @-webkit-keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* 录音可视化 */
+        .visualizer-container {
+            width: 100%;
+            height: 60px;
+            margin: 10px 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+        }
+        
+        #visualizer {
+            width: 100%;
+            height: 60px;
+            background: rgba(38, 208, 206, 0.1);
+            border-radius: 10px;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        
+        /* 音频播放器 */
+        .audio-player {
+            width: 100%;
+            margin-top: 10px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            gap: 6px;
+        }
+        
+        .audio-player audio {
+            width: 100%;
+        }
+        
+        .audio-player-controls {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+        
+        .audio-player-controls .btn {
+            -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                    flex: 1;
+        }
+        
+        /* 录音计时器 */
+        .recording-timer {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+        
+        /* 按钮状态指示 */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            -webkit-transform: none !important;
+                    transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .btn:disabled i {
+            background: #f0f0f0 !important;
+            color: #999 !important;
+        }
+        
+        /* 开发公司信息样式 */
+        .developer-info {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px 15px 0 0;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: auto;
+        }
+        
+        .developer-info p {
+            margin: 4px 0;
+            font-size: 0.8rem;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .developer-info .company {
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .developer-info .contact {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            font-style: italic;
+        }
+        
+        .developer-info i {
+            width: 16px;
+            text-align: center;
+            color: #ffd700;
+        }
+        
+        /* 浏览器兼容性处理 */
+        .browser-notice {
+            background: #fff3e0;
+            color: #e65100;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        
+        /* 简化动画以提高兼容性 */
+        @media screen and (max-width: 768px) {
+            .voice-wave, .visualizer-container {
+                display: none;
+            }
+            
+            .audio-btn {
+                min-width: 65px;
+            }
+            
+            .audio-btn i {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                min-width: 80px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .navigation-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>东盟博览会论坛双语跟读练习助手</h1>
+            <p class="subtitle">常用中英双语表达，提升您的国际会议服务能力</p>
+        </header>
+        
+        <div class="game-container">
+            <!-- 浏览器兼容性提示 -->
+            <div class="browser-notice" id="browser-notice">
+                <i class="fas fa-info-circle"></i> 提示：请确保已授予麦克风和音频播放权限以正常使用所有功能
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-info">
+                <span id="progress-text">学习进度: 0/44 (0%)</span>
+                <span id="score-detail">已完成: 0/43</span>
+            </div>
+            
+            <div class="dialogue-area">
+                <div class="phrase-card">
+                    <div class="phrase-chinese" id="phrase-chinese">您好！请在这边签到，谢谢！</div>
+                    <div class="phrase-pinyin" id="phrase-pinyin">Nín hǎo! Qǐng zài zhèbiān qiāndào, xièxie.</div>
+                    <div class="phrase-english" id="phrase-english">Hello, please check in here. Thank you. </div>
+
+
+                    <div class="voice-wave" id="voice-wave">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+                
+                <!-- 整合控制区域 - 调整布局 -->
+                <div class="control-section">
+                    <!-- 播放控制按钮 -->
+                    <div class="audio-controls">
+                        <div class="audio-btn" id="play-chinese-btn">
+                            <i class="fas fa-volume-up"></i>
+                            <span>播放中文</span>
+                        </div>
+                        <div class="audio-btn" id="play-english-btn">
+                            <i class="fas fa-volume-up"></i>
+                            <span>播放英文</span>
+                        </div>
+                        <div class="audio-btn" id="play-slow-btn">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>慢速播放</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 上一句/下一句按钮 - 移到播放按钮下方 -->
+                    <div class="navigation-buttons">
+                        <button class="nav-btn" id="prev-btn">
+                            <i class="fas fa-arrow-left"></i> 上一句
+                        </button>
+                        <button class="nav-btn" id="next-btn">
+                            下一句 <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="status-indicator" id="status-indicator">
+                        <div class="status-dot playing-dot"></div>
+                        <span>准备播放...</span>
+                    </div>
+                    
+                    <div class="recording-section">
+                        <div class="recording-indicator" id="recording-indicator">
+                            <div class="record-dot"></div>
+                            <div>准备跟读 - 点击下方按钮开始</div>
+                        </div>
+                        
+                        <!-- 录音可视化 -->
+                        <div class="visualizer-container">
+                            <div id="visualizer">
+                                <canvas id="visualizer-canvas"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="recording-controls">
+                            <button class="btn btn-primary" id="record-btn">
+                                <i class="fas fa-microphone"></i> 开始跟读
+                            </button>
+                            <button class="btn btn-secondary" id="playback-btn" disabled="">
+                                <i class="fas fa-play-circle"></i> 播放录音
+                            </button>
+                            <button class="btn btn-secondary" id="save-btn" disabled="">
+                                <i class="fas fa-save"></i> 保存
+                            </button>
+                        </div>
+                        
+                        <div class="additional-controls">
+                            <button class="btn btn-secondary" id="retry-btn">
+                                <i class="fas fa-redo"></i> 重试本句
+                            </button>
+                        </div>
+                        
+                        <div class="recording-timer" id="recording-timer">00:00</div>
+                        
+                        <!-- 录音播放器 -->
+                        <div class="audio-player" id="audio-player" style="display: none;">
+                            <audio id="audio-playback" controls=""></audio>
+                            <div class="audio-player-controls">
+                                <button class="btn btn-secondary" id="play-audio-btn">
+                                    <i class="fas fa-play"></i> 播放
+                                </button>
+                                <button class="btn btn-secondary" id="pause-audio-btn">
+                                    <i class="fas fa-pause"></i> 暂停
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scene-info">
+                <h2 class="scene-title"><i class="fas fa-map-marker-alt"></i> 当前场景：<span id="current-scene">报到注册</span></h2>
+                
+                <div class="scene-description">
+                    <div>
+                        <h3><i class="fas fa-clock"></i> 时间</h3>
+                        <p id="current-time">6-8日全天</p>
+                    </div>
+                    <div>
+                        <h3><i class="fas fa-info-circle"></i> 场景说明</h3>
+                        <p id="scene-description">参会嘉宾抵达会议现场，需要完成注册手续并获取会议资料</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tips">
+                <h3><i class="fas fa-lightbulb"></i> 跟读练习技巧</h3>
+                <ul>
+                    <li><strong>先听原声</strong>：仔细听原声的发音、语调和节奏</li>
+                    <li><strong>分段跟读</strong>：长句子可以分成几个小段分别练习</li>
+                    <li><strong>注意重音</strong>：英语中重音位置会影响词义，要特别注意</li>
+                    <li><strong>模仿语调</strong>：英语的语调变化比中文更丰富，注意模仿</li>
+                    <li><strong>录音对比</strong>：录制自己的发音与原声对比，找出差异</li>
+                    <li><strong>每日练习</strong>：每天练习15分钟比一次练习2小时效果更好</li>
+                </ul>
+            </div>
+            
+            <div class="completion-message" id="completion-message">
+                <h2><i class="fas fa-trophy"></i> 恭喜完成练习！</h2>
+                <p>您已经完成了所有43句双语表达练习</p>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>您的国际会议服务能力已得到显著提升！</p>
+                <button class="btn btn-primary" id="restart-btn">
+                    <i class="fas fa-sync-alt"></i> 重新开始练习
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 开发公司信息 -->
+    <div class="developer-info">
+        <p><i class="fas fa-building"></i> 开发公司：<span class="company">广西凯格企业管理咨询有限责任公司</span></p>
+        <p><i class="fas fa-user"></i> 联系人：谢老师 15577119224</p>
+        <p><i class="fab fa-weixin"></i> 微信号：carolegirls </p>
+        <p><i class="fas fa-globe"></i> 网址：<a href="http://wwww.kingoldedu.com/" target="_blank">http://wwww.kingoldedu.com/</a></p>
+        <p class="contact"><i class="fas fa-comments"></i> 有任何问题和建议请及时和我们反馈</p>
+    </div>
+
+    <script>
+        // 检测浏览器类型
+        function detectBrowser() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.indexOf('qqbrowser') > -1) {
+                return 'qqbrowser';
+            }
+            return 'other';
+        }
+        
+        // 显示浏览器特定提示
+        function showBrowserNotice() {
+            const browser = detectBrowser();
+            const notice = document.getElementById('browser-notice');
+            
+            if (browser === 'qqbrowser') {
+                notice.textContent = '提示：在QQ浏览器中使用，请确保已授予麦克风和音频播放权限以正常使用所有功能';
+                notice.style.display = 'block';
+            }
+        }
+        
+        // 题库数据 - 共43个句子
+        const phrases = [
+            {
+                scene: "报到注册",
+                time: "7-8日全天",
+                description: "参会嘉宾抵达会议现场，需要完成现场签到",
+                chinese: "您好！请在这边签到，谢谢",
+                pinyin: "Nín hǎo! Qǐng zài zhèbiān qiāndào, xièxie.",
+                english: "Hello, please check in here. Thank you. "
+            },
+            {
+                scene: "报到注册",
+                time: "7-8日全天",
+                description: "参会嘉宾抵达会议现场，需要完成注册手续并获取会议资料",
+                chinese: "您好！请扫描二维码，谢谢",
+                pinyin: "Nín hǎo！ qǐng sǎomiáo èrwéimǎ，xiè xie",
+                english: "welcome,Please scan the QR code . Thank you. "
+            },
+            {
+                scene: "报到注册",
+                time: "7-8日全天",
+                description: "参会嘉宾抵达会议现场，需要完成注册手续并获取会议资料",
+                chinese: "这是您的参会资料包，里面有会议材料和日程。",
+                pinyin: "Zhè shì nín de cānhuì zīliào bāo, lǐmiàn yǒu huìyì cáiliào hé rìchéng.",
+                english: "Here is your conference bag. It contains the meeting materials and schedule."
+            },
+            {
+                scene: "报到注册",
+                time: "7-8日全天",
+                description: "参会嘉宾抵达会议现场，需要完成注册手续并获取会议资料",
+                chinese: "休息区在左边，提供免费茶水。",
+                pinyin: "Xiūxí qū zài zuǒbiān, tígōng miǎnfèi cháshuǐ.",
+                english: "The rest area is on your left. Free tea is provided."
+            },
+            {
+                scene: "引导带路",
+                time: "全流程",
+                description: "引导参会嘉宾前往不同会议地点",
+                chinese: "请跟我来，会议室在前面。",
+                pinyin: "Qǐng gēn wǒ lái, huìyì shì zài qiánmiàn.",
+                english: "Please follow me. The meeting room is straight ahead."
+            },
+            {
+                scene: "引导带路",
+                time: "全流程",
+                description: "引导参会嘉宾前往不同会议地点",
+                chinese: "小心台阶！",
+                pinyin: "Xiǎoxīn táijiē!",
+                english: "Watch your step!"
+            },
+            {
+                scene: "引导带路",
+                time: "全流程",
+                description: "引导参会嘉宾前往不同会议地点",
+                chinese: "卫生间在走廊尽头右转。",
+                pinyin: "Wèishēngjiān zài zǒuláng jìntóu yòu zhuǎn.",
+                english: "The restroom is to the right, at the end of the hallway."
+            },
+            {
+                scene: "开幕式",
+                time: "9日上午",
+                description: "会议开幕式，重要嘉宾发言",
+                chinese: "请您稍等，仪式五分钟后开始。",
+                pinyin: "Qǐng nín shāo děng, yíshì wǔ fēnzhōng hòu kāishǐ.",
+                english: "The ceremony will begin in five minutes. Please wait a moment."
+            },
+            {
+                scene: "开幕式",
+                time: "9日上午",
+                description: "会议开幕式，重要嘉宾发言",
+                chinese: "请您站在签约台中间的位置。",
+                pinyin: "Qǐng nín zhàn zài qiānyuē tái zhōngjiān de wèizhì.",
+                english: "Please stand in the center of the signing table."
+            },
+            {
+                scene: "开幕式",
+                time: "9日上午",
+                description: "会议开幕式，重要嘉宾发言",
+                chinese: "这是待签署的文件，请您过目。",
+                pinyin: "Zhè shì dài qiānshǔ de wénjiàn, qǐng nín guòmù.",
+                english: "Here is the document for signing. Please review it."
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "咖啡和茶在这里取用。",
+                pinyin: "Kāfēi hé chá zài zhèlǐ qǔyòng.",
+                english: "Coffee and tea are available here."
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "需要加牛奶吗？(递上)",
+                pinyin: "Xūyào jiā niúnǎi ma? (dì shàng)",
+                english: "Would you like some milk? (while offering)"
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "清真点心放在蓝色托盘里。",
+                pinyin: "Qīngzhēn diǎnxīn fàng zài lán sè tuōpán lǐ.",
+                english: "The halal snacks are on the blue tray."
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "需要方糖吗？",
+                pinyin: "Xūyào fāngtáng ma?",
+                english: "Would you like some sugar?"
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "点心请自取。",
+                pinyin: "Diǎnxīn qǐng zìqǔ.",
+                english: "Please help yourself to the snacks."
+            },
+            {
+                scene: "茶歇服务",
+                time: "茶歇时间",
+                description: "提供茶歇服务",
+                chinese: "垃圾请放入黑色的垃圾桶。",
+                pinyin: "Lèsè qǐng fàng rù hēi sè de lèsè tǒng.",
+                english: "Please put trash in the black bin."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "晚宴在新加坡厅举行，请这边走。",
+                pinyin: "Wǎnyàn zài Xīnjiāpō tīng jǔxíng, qǐng zhè biān zǒu.",
+                english: "The dinner is in the Singapore Hall. This way, please."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "您的座位在主桌一号位。",
+                pinyin: "Nín de zuòwèi zài zhǔ zhuō yī hào wèi.",
+                english: "Your seat is number one at the main table."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "这是今晚的菜单，主菜可选牛肉或鱼。",
+                pinyin: "Zhè shì jīn wǎn de càidān, zhǔ cài kě xuǎn niúròu huò yú.",
+                english: "Here is the menu. The main course is beef or fish."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "会见室在这里。",
+                pinyin: "Huìjiàn shì zài zhèlǐ.",
+                english: "The meeting room is right here."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "请您先就座，领导马上就到。",
+                pinyin: "Qǐng nín xiān jiùzuò, lǐngdǎo mǎshàng jiù dào.",
+                english: "Please have a seat. The VIP will arrive shortly."
+            },
+            {
+                scene: "领导接待与会见",
+                time: "会议期间",
+                description: "接待领导及重要嘉宾",
+                chinese: "请问您喝茶还是咖啡？",
+                pinyin: "Qǐngwèn nín hē chá háishì kāfēi?",
+                english: "Would you prefer tea or coffee?"
+            },
+            {
+                scene: "研讨会服务",
+                time: "会议期间",
+                description: "为研讨会提供支持服务",
+                chinese: "这是麦克风，提问时请举手。",
+                pinyin: "Zhè shì màikèfēng, tíwèn shí qǐng jǔshǒu.",
+                english: "Here is the microphone. Please raise your hand if you have a question."
+            },
+            {
+                scene: "研讨会服务",
+                time: "会议期间",
+                description: "为研讨会提供支持服务",
+                chinese: "矿泉水在桌子下面。",
+                pinyin: "Kuàngquán shuǐ zài zhuōzi xiàmiàn.",
+                english: "Bottled water is under the table."
+            },
+            {
+                scene: "调研考察",
+                time: "10日下午",
+                description: "组织参会嘉宾进行实地考察",
+                chinese: "大巴车车牌是桂 A12345。",
+                pinyin: "Dàbā chē chēpái shì Guì A12345.",
+                english: "The bus license plate is Gui-A12345."
+            },
+            {
+                scene: "调研考察",
+                time: "10日下午",
+                description: "组织参会嘉宾进行实地考察",
+                chinese: "车程大约需要 1 小时。",
+                pinyin: "Chēchéng dàyuē xūyào 1 xiǎoshí.",
+                english: "The drive will take about one hour."
+            },
+            {
+                scene: "调研考察",
+                time: "10日下午",
+                description: "组织参会嘉宾进行实地考察",
+                chinese: "请准时集合，不要迟到。",
+                pinyin: "Qǐng zhǔnshí jíhé, bùyào chídào.",
+                english: "Please gather on time."
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "请不要担心，我来帮您解决。",
+                pinyin: "Qǐng bùyào dānxīn, wǒ lái bāng nín jiějué.",
+                english: "Please don't worry, I will help you."
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "名字牌错了？我立刻给您换一个新的！",
+                pinyin: "Míngzì pái cuò le? Wǒ lìkè gěi nín huàn yīgè xīn de!",
+                english: "Is the name card incorrect? I'll get a new one for you right away!"
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "需要祈祷室吗？我带您去二楼。",
+                pinyin: "Xūyào qídǎo shì ma? Wǒ dài nín qù èr lóu.",
+                english: "Do you need a prayer room? I can take you to the second floor."
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "无线网络密码是 888888。",
+                pinyin: "Wúxiàn wǎngluò mìmǎ shì 888888.",
+                english: "The WiFi password is 888888."
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "您丢东西了？我帮您广播寻找。",
+                pinyin: "Nín diū dōngxī le? Wǒ bāng nín guǎngbō xúnzhǎo.",
+                english: "Did you lose something? I can make an announcement for you."
+            },
+            {
+                scene: "突发问题处理",
+                time: "全流程",
+                description: "处理会议中的突发问题",
+                chinese: "医生马上就到！",
+                pinyin: "Yīshēng mǎshàng jiù dào!",
+                english: "A doctor is on the way!"
+            },
+            {
+                scene: "送站与离会服务",
+                time: "会议最后一天",
+                description: "为嘉宾提供离会服务",
+                chinese: "大巴在酒店门口等候。",
+                pinyin: "Dàbā zài jiǔdiàn ménkǒu děnghòu.",
+                english: "The bus is waiting at the hotel entrance."
+            },
+            {
+                scene: "送站与离会服务",
+                time: "会议最后一天",
+                description: "为嘉宾提供离会服务",
+                chinese: "去机场大约需要 40 分钟车程。",
+                pinyin: "Qù jīchǎng dàyuē xūyào 40 fēnzhōng chēchéng.",
+                english: "It takes about 40 minutes to get to the airport."
+            },
+            {
+                scene: "送站与离会服务",
+                time: "会议最后一天",
+                description: "为嘉宾提供离会服务",
+                chinese: "开发票请到前台。",
+                pinyin: "Kāi fāpiào qǐng dào qiántái.",
+                english: "Please go to the front desk for the invoice."
+            },
+            {
+                scene: "送站与离会服务",
+                time: "会议最后一天",
+                description: "为嘉宾提供离会服务",
+                chinese: "我帮您拿行李吧。",
+                pinyin: "Wǒ bāng nín ná xínglǐ ba.",
+                english: "Let me help you with your luggage."
+            },
+            {
+                scene: "送站与离会服务",
+                time: "会议最后一天",
+                description: "为嘉宾提供离会服务",
+                chinese: "下次再见！",
+                pinyin: "Xià cì zàijiàn!",
+                english: "Hope to see you again!"
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "请稍等，我查一下。",
+                pinyin: "Qǐng shāo děng, wǒ chá yīxià.",
+                english: "Just a moment, please. Let me check."
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "是的。/ 不是。",
+                pinyin: "Shì de./ Bùshì.",
+                english: "Yes. / No."
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "很抱歉，我们马上处理。",
+                pinyin: "Hěn bàoqiàn, wǒmen mǎshàng chǔlǐ.",
+                english: "I'm sorry about that. We will fix it immediately."
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "我听不懂，能请您写下来吗？",
+                pinyin: "Wǒ tīng bù dǒng, néng qǐng nín xiě xiàlái ma?",
+                english: "I don't understand. Could you please write it down?"
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "我找一位同事来帮您。",
+                pinyin: "Wǒ zhǎo yī wèi tóngshì lái bāng nín.",
+                english: "I will find a colleague to help you."
+            },
+            {
+                scene: "万能备用句",
+                time: "全流程",
+                description: "通用交流语句",
+                chinese: "祝您一切顺利！",
+                pinyin: "Zhù nín yīqiè shùnlì!",
+                english: "All the best!"
+            }
+        ];
+
+        // 游戏状态
+        let currentPhraseIndex = 0;
+        let completedPhrases = 0;
+        let completedIndexes = []; // 记录已完成的句子索引，用于准确跟踪进度
+        const totalPhrases = phrases.length; // 动态获取句子总数
+        let isRecording = false;
+        let isPlayingAudio = false;
+        let recordingTime = 0;
+        let recordingTimer;
+        
+        // 音频录制相关变量
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+        let audioUrl;
+        let audioContext;
+        let analyser;
+        let canvasCtx;
+        let animationId;
+        
+        // 语音合成对象
+        const synth = window.speechSynthesis;
+        let isPlayingSpeech = false;
+        let preferredVoices = {
+            'zh-CN': null,
+            'en-US': null
+        };
+        
+        // DOM元素
+        const phraseChinese = document.getElementById('phrase-chinese');
+        const phrasePinyin = document.getElementById('phrase-pinyin');
+        const phraseEnglish = document.getElementById('phrase-english');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const scoreDetail = document.getElementById('score-detail');
+        const recordBtn = document.getElementById('record-btn');
+        const playbackBtn = document.getElementById('playback-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const playChineseBtn = document.getElementById('play-chinese-btn');
+        const playEnglishBtn = document.getElementById('play-english-btn');
+        const playSlowBtn = document.getElementById('play-slow-btn');
+        const recordingIndicator = document.getElementById('recording-indicator');
+        const statusIndicator = document.getElementById('status-indicator');
+        const completionMessage = document.getElementById('completion-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const currentScene = document.getElementById('current-scene');
+        const currentTime = document.getElementById('current-time');
+        const sceneDescription = document.getElementById('scene-description');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const retryBtn = document.getElementById('retry-btn');
+        const voiceWave = document.getElementById('voice-wave');
+        const audioPlayer = document.getElementById('audio-player');
+        const audioPlayback = document.getElementById('audio-playback');
+        const playAudioBtn = document.getElementById('play-audio-btn');
+        const pauseAudioBtn = document.getElementById('pause-audio-btn');
+        const visualizerCanvas = document.getElementById('visualizer-canvas');
+        const recordingTimerEl = document.getElementById('recording-timer');
+        
+        // 初始化可视化画布
+        function initVisualizer() {
+            // 简化QQ浏览器中的可视化效果以提高兼容性
+            if (detectBrowser() === 'qqbrowser') {
+                document.querySelector('.visualizer-container').style.display = 'none';
+                return;
+            }
+            
+            const canvas = document.getElementById('visualizer-canvas');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            canvasCtx = canvas.getContext('2d');
+        }
+        
+        // 绘制音频波形 - 简化实现以提高兼容性
+        function drawWaveform() {
+            if (!analyser || !canvasCtx || detectBrowser() === 'qqbrowser') return;
+            
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteTimeDomainData(dataArray);
+            
+            canvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+            canvasCtx.lineWidth = 2;
+            canvasCtx.strokeStyle = '#1a2980';
+            canvasCtx.beginPath();
+            
+            const sliceWidth = visualizerCanvas.width * 1.0 / bufferLength;
+            let x = 0;
+            
+            for(let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * visualizerCanvas.height / 2;
+                
+                if(i === 0) {
+                    canvasCtx.moveTo(x, y);
+                } else {
+                    canvasCtx.lineTo(x, y);
+                }
+                
+                x += sliceWidth;
+            }
+            
+            canvasCtx.lineTo(visualizerCanvas.width, visualizerCanvas.height / 2);
+            canvasCtx.stroke();
+            
+            animationId = requestAnimationFrame(drawWaveform);
+        }
+        
+        // 初始化游戏
+        function initGame() {
+            currentPhraseIndex = 0;
+            completedPhrases = 0;
+            completedIndexes = []; // 重置已完成索引
+            updatePhrase();
+            updateProgress();
+            completionMessage.style.display = 'none';
+            document.querySelector('.dialogue-area').style.display = 'flex';
+            document.querySelector('.tips').style.display = 'block';
+            voiceWave.style.display = 'flex';
+            audioPlayer.style.display = 'none';
+            initVisualizer();
+            
+            // 检测并提示QQ浏览器用户
+            showBrowserNotice();
+            
+            // 初始化语音
+            initVoices();
+        }
+        
+        // 初始化语音设置，选择更自然的语音
+        function initVoices() {
+            // 监听语音加载完成事件
+            function loadVoices() {
+                const voices = speechSynthesis.getVoices();
+                
+                // 寻找高质量的中文语音
+                for (let i = 0; i < voices.length; i++) {
+                    const voice = voices[i];
+                    // 优先选择带有"Microsoft"、"Google"或"Natural"标记的高质量语音
+                    if ((voice.lang.includes('zh-CN') || voice.lang.includes('zh')) && 
+                        (voice.name.includes('Microsoft') || voice.name.includes('Google') || voice.name.includes('Natural'))) {
+                        preferredVoices['zh-CN'] = voice;
+                        break;
+                    }
+                    // 如果没找到高质量的，就用第一个可用的中文语音
+                    else if (!preferredVoices['zh-CN'] && (voice.lang.includes('zh-CN') || voice.lang.includes('zh'))) {
+                        preferredVoices['zh-CN'] = voice;
+                    }
+                }
+                
+                // 寻找高质量的英文语音
+                for (let i = 0; i < voices.length; i++) {
+                    const voice = voices[i];
+                    // 优先选择带有"Microsoft"、"Google"或"Natural"标记的高质量语音
+                    if ((voice.lang.includes('en-US') || voice.lang.includes('en-GB')) && 
+                        (voice.name.includes('Microsoft') || voice.name.includes('Google') || voice.name.includes('Natural'))) {
+                        preferredVoices['en-US'] = voice;
+                        break;
+                    }
+                    // 如果没找到高质量的，就用第一个可用的英文语音
+                    else if (!preferredVoices['en-US'] && (voice.lang.includes('en-US') || voice.lang.includes('en-GB') || voice.lang.includes('en'))) {
+                        preferredVoices['en-US'] = voice;
+                    }
+                }
+                
+                // 清除事件监听
+                speechSynthesis.onvoiceschanged = null;
+            }
+            
+            // 立即尝试加载语音
+            loadVoices();
+            
+            // 如果没有语音可用，设置事件监听
+            if (speechSynthesis.getVoices().length === 0) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+        }
+        
+        // 更新短语显示
+        function updatePhrase() {
+            const phrase = phrases[currentPhraseIndex];
+            
+            phraseChinese.textContent = phrase.chinese;
+            phrasePinyin.textContent = phrase.pinyin;
+            phraseEnglish.textContent = phrase.english;
+            currentScene.textContent = phrase.scene;
+            currentTime.textContent = phrase.time;
+            sceneDescription.textContent = phrase.description;
+            
+            // 重置按钮状态
+            recordBtn.innerHTML = '<i class="fas fa-microphone"></i> 开始跟读';
+            recordBtn.disabled = false;
+            playbackBtn.disabled = true;
+            saveBtn.disabled = true;
+            recordingIndicator.innerHTML = '<div class="record-dot"></div><div>准备跟读 - 点击下方按钮开始</div>';
+            recordingIndicator.classList.remove('recording');
+            isRecording = false;
+            recordingTime = 0;
+            recordingTimerEl.textContent = '00:00';
+            
+            // 更新状态指示器
+            updateStatusIndicator('ready', '准备播放...');
+            
+            // 停止所有语音
+            stopAllAudio();
+            
+            // 重置录音
+            audioChunks = [];
+            audioBlob = null;
+            audioUrl = null;
+            audioPlayer.style.display = 'none';
+            
+            // 停止可视化
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            // 清除画布
+            if (canvasCtx) {
+                canvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+            }
+        }
+        
+        // 停止所有音频播放
+        function stopAllAudio() {
+            // 停止语音合成
+            if (synth.speaking) {
+                synth.cancel();
+                isPlayingSpeech = false;
+            }
+            
+            // 停止录音播放
+            if (!audioPlayback.paused) {
+                audioPlayback.pause();
+                audioPlayback.currentTime = 0;
+                isPlayingAudio = false;
+                playAudioBtn.disabled = false;
+                pauseAudioBtn.disabled = true;
+            }
+        }
+        
+        // 更新状态指示器
+        function updateStatusIndicator(type, message) {
+            const dot = statusIndicator.querySelector('.status-dot');
+            statusIndicator.className = 'status-indicator';
+            dot.className = 'status-dot';
+            
+            if (type === 'playing') {
+                statusIndicator.classList.add('status-playing');
+                dot.classList.add('playing-dot');
+            } else if (type === 'recording') {
+                statusIndicator.classList.add('status-recording');
+                dot.classList.add('recording-dot');
+            } else {
+                statusIndicator.classList.remove('status-playing', 'status-recording');
+            }
+            
+            statusIndicator.querySelector('span').textContent = message;
+        }
+        
+        // 更新进度 - 修复进度显示问题
+        function updateProgress() {
+            // 确保已完成数量准确反映已完成的句子数
+            completedPhrases = completedIndexes.length;
+            const progressPercent = Math.round((completedPhrases / totalPhrases) * 100);
+            progressBar.style.width = progressPercent + '%';
+            progressText.textContent = '学习进度: ' + completedPhrases + '/' + totalPhrases + ' (' + progressPercent + '%)';
+            scoreDetail.textContent = '已完成: ' + completedPhrases + '/' + totalPhrases;
+            
+            // 检查是否完成所有句子
+            if (completedPhrases === totalPhrases) {
+                document.querySelector('.dialogue-area').style.display = 'none';
+                document.querySelector('.tips').style.display = 'none';
+                voiceWave.style.display = 'none';
+                completionMessage.style.display = 'block';
+            }
+        }
+        
+        // 播放文本 - 使用更自然的语音
+        function playText(text, lang, rate = 1.0) {
+            stopAllAudio();
+            
+            // 检测浏览器类型，使用不同的处理方式
+            const browser = detectBrowser();
+            
+            // 对于QQ浏览器，使用更简单的语音合成方式
+            if (browser === 'qqbrowser') {
+                try {
+                    isPlayingSpeech = true;
+                    updateStatusIndicator('playing', '播放中...');
+                    
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = lang;
+                    utterance.rate = rate;
+                    utterance.pitch = 1.0; // 调整音调使其更自然
+                    utterance.volume = 1.0;
+                    
+                    utterance.onend = function() {
+                        isPlayingSpeech = false;
+                        updateStatusIndicator('ready', '播放完成');
+                        setTimeout(function() {
+                            updateStatusIndicator('ready', '准备播放...');
+                        }, 2000);
+                    };
+                    
+                    utterance.onerror = function(event) {
+                        isPlayingSpeech = false;
+                        console.error('语音播放错误:', event.error);
+                        updateStatusIndicator('ready', '播放出错，请重试');
+                    };
+                    
+                    synth.speak(utterance);
+                } catch (e) {
+                    console.error('语音合成失败:', e);
+                    updateStatusIndicator('ready', '语音功能暂时不可用');
+                    // 提供备选方案：显示提示文字
+                    alert('您的浏览器可能不支持语音合成，请手动朗读。');
+                }
+                return;
+            }
+            
+            // 其他浏览器的处理方式
+            isPlayingSpeech = true;
+            updateStatusIndicator('playing', '播放中...');
+            
+            // 创建语音实例
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // 设置更自然的语音参数
+            utterance.rate = rate;       // 语速
+            utterance.pitch = 1.0;       // 音调
+            utterance.volume = 1.0;      // 音量
+            utterance.lang = lang;       // 语言
+            
+            // 使用优选的高质量语音
+            if (preferredVoices[lang]) {
+                utterance.voice = preferredVoices[lang];
+            } else {
+                // 如果没有找到优选语音，尝试寻找其他可用语音
+                const voices = speechSynthesis.getVoices();
+                let voiceFound = false;
+                
+                if (lang === 'zh-CN') {
+                    for (let i = 0; i < voices.length; i++) {
+                        const voice = voices[i];
+                        if (voice.lang.includes('zh-CN') || voice.lang.includes('zh')) {
+                            utterance.voice = voice;
+                            voiceFound = true;
+                            break;
+                        }
+                    }
+                } else if (lang === 'en-US') {
+                    for (let i = 0; i < voices.length; i++) {
+                        const voice = voices[i];
+                        if (voice.lang.includes('en-US') || voice.lang.includes('en-GB') || voice.lang.includes('en')) {
+                            utterance.voice = voice;
+                            voiceFound = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // 语音事件处理
+            utterance.onstart = function() {
+                isPlayingSpeech = true;
+            };
+            
+            utterance.onend = function() {
+                isPlayingSpeech = false;
+                updateStatusIndicator('ready', '播放完成');
+                setTimeout(function() {
+                    updateStatusIndicator('ready', '准备播放...');
+                }, 2000);
+            };
+            
+            utterance.onerror = function(event) {
+                isPlayingSpeech = false;
+                console.error('语音播放错误:', event.error);
+                
+                // 根据错误类型显示不同的提示
+                let errorMessage = '播放出错，请重试';
+                if (event.error === 'not-allowed') {
+                    errorMessage = '需要允许语音播放权限';
+                } else if (event.error === 'no-speech') {
+                    errorMessage = '未找到语音数据';
+                } else if (event.error === 'audio-capture') {
+                    errorMessage = '音频捕获失败';
+                }
+                
+                updateStatusIndicator('ready', errorMessage);
+            };
+            
+            synth.speak(utterance);
+        }
+        
+        // 开始跟读 - 修复录音功能，兼容QQ浏览器
+        function startRecording() {
+            if (isRecording) return;
+            
+            // 检测浏览器并提供特定提示
+            const browser = detectBrowser();
+            if (browser === 'qqbrowser') {
+                // QQ浏览器可能需要额外的权限确认
+                if (!confirm('需要使用麦克风进行录音，是否允许？')) {
+                    return;
+                }
+            }
+            
+            try {
+                stopAllAudio();
+                
+                // 修复：使用更兼容的约束条件
+                navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        sampleRate: 44100
+                    } 
+                }).then(function(stream) {
+                    // 修复：确保MediaRecorder可用
+                    if (typeof MediaRecorder === 'undefined') {
+                        alert('您的浏览器不支持录音功能，请更换浏览器重试');
+                        stream.getTracks().forEach(function(track) {
+                            track.stop();
+                        });
+                        return;
+                    }
+                    
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    // 初始化音频上下文和分析器 - 简化QQ浏览器的实现
+                    if (browser !== 'qqbrowser' && typeof AudioContext !== 'undefined') {
+                        audioContext = new AudioContext();
+                        const source = audioContext.createMediaStreamSource(stream);
+                        analyser = audioContext.createAnalyser();
+                        analyser.fftSize = 2048;
+                        source.connect(analyser);
+                        
+                        // 开始可视化
+                        drawWaveform();
+                    }
+                    
+                    // 设置录音数据处理器
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = function(event) {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    mediaRecorder.onstop = function() {
+                        // 修复：使用更兼容的音频格式
+                        audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+                        audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        // 确保音频元素正确设置
+                        audioPlayback.src = audioUrl;
+                        audioPlayback.onloadedmetadata = function() {
+                            console.log('录音加载完成，可以播放');
+                            updateStatusIndicator('ready', '录音完成，可以播放');
+                        };
+                        
+                        // 断开音频节点
+                        stream.getTracks().forEach(function(track) {
+                            track.stop();
+                        });
+                        
+                        // 停止可视化
+                        if (animationId) {
+                            cancelAnimationFrame(animationId);
+                            animationId = null;
+                        }
+                        
+                        // 清除画布
+                        if (canvasCtx) {
+                            canvasCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+                        }
+                    };
+                    
+                    // 开始录音
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordBtn.innerHTML = '<i class="fas fa-stop"></i> 停止录音';
+                    recordingIndicator.innerHTML = '<div class="record-dot"></div><div>录音中...请跟读</div>';
+                    recordingIndicator.classList.add('recording');
+                    updateStatusIndicator('recording', '录音中...请跟读');
+                    playbackBtn.disabled = true;
+                    saveBtn.disabled = true;
+                    audioPlayer.style.display = 'none';
+                    
+                    // 开始计时
+                    recordingTime = 0;
+                    clearInterval(recordingTimer);
+                    recordingTimer = setInterval(function() {
+                        recordingTime++;
+                        const minutes = Math.floor(recordingTime / 60).toString().padStart(2, '0');
+                        const seconds = (recordingTime % 60).toString().padStart(2, '0');
+                        recordingTimerEl.textContent = minutes + ':' + seconds;
+                    }, 1000);
+                }).catch(function(error) {
+                    console.error('录音权限被拒绝或出现错误:', error);
+                    alert('无法访问麦克风，请确保已授予录音权限。在QQ浏览器中，您可能需要在设置中手动开启麦克风权限。');
+                    isRecording = false;
+                    updateStatusIndicator('ready', '录音权限被拒绝');
+                });
+            } catch (error) {
+                console.error('录音初始化失败:', error);
+                alert('录音功能初始化失败，请重试');
+                isRecording = false;
+                updateStatusIndicator('ready', '录音初始化失败');
+            }
+        }
+        
+        // 停止跟读
+        function stopRecording() {
+            if (!isRecording || !mediaRecorder) return;
+            
+            mediaRecorder.stop();
+            isRecording = false;
+            recordBtn.innerHTML = '<i class="fas fa-microphone"></i> 重新录制';
+            recordingIndicator.innerHTML = '<div class="record-dot"></div><div>录音完成！</div>';
+            recordingIndicator.classList.remove('recording');
+            
+            // 修复：确保录音完成后启用播放按钮
+            setTimeout(function() {
+                playbackBtn.disabled = false;
+                saveBtn.disabled = false;
+                audioPlayer.style.display = 'flex';
+            }, 500);
+            
+            updateStatusIndicator('ready', '录音完成，可以播放');
+            
+            // 停止计时
+            clearInterval(recordingTimer);
+        }
+        
+        // 播放录音 - 修复播放功能
+        function playRecording() {
+            if (!audioUrl) {
+                alert('没有可播放的录音，请先录音');
+                return;
+            }
+            
+            stopAllAudio();
+            
+            // 修复：确保音频元素正确加载并播放
+            try {
+                audioPlayback.play()
+                    .then(function() {
+                        playAudioBtn.disabled = true;
+                        pauseAudioBtn.disabled = false;
+                        updateStatusIndicator('playing', '正在播放您的录音...');
+                    })
+                    .catch(function(error) {
+                        console.error('播放失败:', error);
+                        updateStatusIndicator('ready', '播放失败，请重试');
+                        
+                        // 尝试解决常见的播放问题
+                        if (error.name === 'NotAllowedError') {
+                            alert('需要允许音频播放权限');
+                        } else if (error.name === 'AbortError') {
+                            alert('播放被中断，请重试');
+                        } else {
+                            alert('播放失败: ' + error.message);
+                        }
+                    });
+            } catch (e) {
+                console.error('播放异常:', e);
+                // 兼容旧浏览器的播放方式
+                try {
+                    audioPlayback.play();
+                    playAudioBtn.disabled = true;
+                    pauseAudioBtn.disabled = false;
+                    updateStatusIndicator('playing', '正在播放您的录音...');
+                } catch (e2) {
+                    alert('播放失败，请尝试点击音频播放器上的播放按钮');
+                    updateStatusIndicator('ready', '播放失败，请点击播放器');
+                }
+            }
+        }
+        
+        // 播放中文
+        function playChinese() {
+            playText(phrases[currentPhraseIndex].chinese, 'zh-CN');
+        }
+        
+        // 播放英文
+        function playEnglish() {
+            playText(phrases[currentPhraseIndex].english, 'en-US');
+        }
+        
+        // 慢速播放
+        function playSlow() {
+            playText(phrases[currentPhraseIndex].english, 'en-US', 0.7);
+        }
+        
+        // 保存录音 - 保存时标记为已完成
+        function saveRecording() {
+            if (!audioBlob) {
+                alert('没有可保存的录音，请先录音');
+                return;
+            }
+            
+            // 标记当前句子为已完成
+            if (!completedIndexes.includes(currentPhraseIndex)) {
+                completedIndexes.push(currentPhraseIndex);
+                updateProgress(); // 立即更新进度
+            }
+            
+            // 针对QQ浏览器的特殊处理
+            if (detectBrowser() === 'qqbrowser') {
+                // 创建一个简单的下载链接
+                const a = document.createElement('a');
+                a.href = audioUrl;
+                a.download = '跟读录音_第' + (currentPhraseIndex + 1) + '句.mp3';
+                document.body.appendChild(a);
+                
+                // 触发点击事件
+                try {
+                    a.click();
+                    alert('录音已保存到您的下载文件夹');
+                } catch (e) {
+                    console.error('保存失败:', e);
+                    console.error('保存失败:', e);
+                    alert('保存失败，请长按链接手动保存');
+                    a.textContent = '点击或长按保存录音';
+                    a.style.display = 'block';
+                    a.style.textAlign = 'center';
+                    a.style.margin = '10px 0';
+                    a.style.padding = '10px';
+                    a.style.backgroundColor = '#1a2980';
+                    a.style.color = 'white';
+                    a.style.borderRadius = '5px';
+                }
+                
+                document.body.removeChild(a);
+                return;
+            }
+            
+            // 其他浏览器的处理方式
+            const a = document.createElement('a');
+            a.href = audioUrl;
+            a.download = '跟读录音_第' + (currentPhraseIndex + 1) + '句.mp3';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert('录音已保存！');
+        }
+        
+        // 下一句
+        function nextPhrase() {
+            if (currentPhraseIndex < totalPhrases - 1) {
+                currentPhraseIndex++;
+                updatePhrase();
+            } else {
+                // 检查是否完成所有句子
+                if (completedPhrases === totalPhrases) {
+                    document.querySelector('.dialogue-area').style.display = 'none';
+                    document.querySelector('.tips').style.display = 'none';
+                    voiceWave.style.display = 'none';
+                    completionMessage.style.display = 'block';
+                } else {
+                    alert('已经是最后一句了。请完成所有句子的练习。');
+                }
+            }
+        }
+        
+        // 上一句
+        function prevPhrase() {
+            if (currentPhraseIndex > 0) {
+                currentPhraseIndex--;
+                updatePhrase();
+            }
+        }
+        
+        // 事件监听 - 使用兼容写法
+        function addEvent(element, event, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(event, handler);
+            } else if (element.attachEvent) { // 兼容旧IE
+                element.attachEvent('on' + event, handler);
+            } else {
+                element['on' + event] = handler;
+            }
+        }
+        
+        // 绑定事件
+        addEvent(recordBtn, 'click', function() {
+            if (isRecording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+        
+        addEvent(playbackBtn, 'click', playRecording);
+        addEvent(saveBtn, 'click', saveRecording);
+        addEvent(playChineseBtn, 'click', playChinese);
+        addEvent(playEnglishBtn, 'click', playEnglish);
+        addEvent(playSlowBtn, 'click', playSlow);
+        addEvent(nextBtn, 'click', nextPhrase);
+        addEvent(prevBtn, 'click', prevPhrase);
+        addEvent(retryBtn, 'click', updatePhrase);
+        addEvent(restartBtn, 'click', initGame);
+        
+        // 音频播放器控制
+        addEvent(playAudioBtn, 'click', function() {
+            try {
+                audioPlayback.play()
+                    .then(function() {
+                        playAudioBtn.disabled = true;
+                        pauseAudioBtn.disabled = false;
+                        updateStatusIndicator('playing', '正在播放您的录音...');
+                    })
+                    .catch(function(error) {
+                        console.error('播放失败:', error);
+                        updateStatusIndicator('ready', '播放失败，请重试');
+                    });
+            } catch (e) {
+                try {
+                    audioPlayback.play();
+                    playAudioBtn.disabled = true;
+                    pauseAudioBtn.disabled = false;
+                    updateStatusIndicator('playing', '正在播放您的录音...');
+                } catch (e2) {
+                    alert('播放失败，请重试');
+                }
+            }
+        });
+        
+        addEvent(pauseAudioBtn, 'click', function() {
+            audioPlayback.pause();
+            playAudioBtn.disabled = false;
+            pauseAudioBtn.disabled = true;
+            updateStatusIndicator('ready', '播放已暂停');
+        });
+        
+        addEvent(audioPlayback, 'ended', function() {
+            playAudioBtn.disabled = false;
+            pauseAudioBtn.disabled = true;
+            updateStatusIndicator('ready', '播放完成');
+        });
+        
+        // 确保语音列表已加载
+        addEvent(window.speechSynthesis, 'voiceschanged', function() {
+            console.log('语音列表已加载');
+            initVoices(); // 重新初始化语音选择
+        });
+        
+        // 窗口大小变化时重绘画布
+        addEvent(window, 'resize', function() {
+            if (visualizerCanvas) {
+                visualizerCanvas.width = visualizerCanvas.offsetWidth;
+                visualizerCanvas.height = visualizerCanvas.offsetHeight;
+            }
+        });
+        
+        // 初始化游戏
+        initGame();
+        
+        // 确保在页面关闭前停止所有音频
+        addEvent(window, 'beforeunload', function() {
+            stopAllAudio();
+        });
+    </script>
+
+
+</body></html>
